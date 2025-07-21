@@ -28,11 +28,17 @@ class Record:
         phone_obj = Phone(phone)
         self.phones.append(phone_obj)
 
-    def remove_phone(self):
-        pass
-    def edit_phone(self):
-              
+    def remove_phone(self, phone):
+        if phone in self.phones:
+            self.phones.remove(phone)
 
+    def edit_phone(self, old, new):
+        old_phone = self.find_phone(old)
+        if old_phone not in self.phones:
+            raise ValueError('Phone number not found')
+        self.phones.remove(old_phone)
+        self.phones.append(Phone(new))
+             
     def find_phone(self, phone):
         for el in self.phones:
             if el.value == phone:
@@ -44,12 +50,19 @@ class Record:
 
 class AddressBook(UserDict):
 
-    def add_record(self):
-         pass
-    def find(self):
-         pass
-    def delete(self):
-         pass
+    def add_record(self, record):
+        self.data[record.name.value] = record
+
+    def find(self, name):
+        if name in self.data:
+            return self.data[name]
+        else:
+            return None
+        
+    def delete(self, name):
+        if name in self.data:
+            del self.data[name]
+            
     def __str__(self):
          pass
     
